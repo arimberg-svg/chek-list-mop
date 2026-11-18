@@ -3,578 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Чек-лист на 5 дней. Отгрузка юридическим лицам</title>
-  <meta name="description" content="Пять дней для менеджера по работе с клиентами: доверенность, оплаченный счёт или открытый остаток кредита, УПД и ЭДО." />
+  <title>Отгрузка юридическим лицам. 5 дней — Академия УМ</title>
+  <meta name="description" content="Два листа на пять дней: стажёр отмечает, что сделал, наставник отмечает, что увидел." />
   <style>
-    :root {
-      --ink: #111111;
-      --purple: #4208A8;
-      --line: #CCCCCC;
-      --paper: #ffffff;
-      --page-w: 210mm;
-      --font: Arial, Helvetica, sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      color: var(--ink);
-      font-family: var(--font);
-      font-size: 17px;
-      line-height: 1.4;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
       background: #f3f3f3;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
     }
-    .toolbar {
-      position: sticky; top: 0; z-index: 50;
-      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background: var(--purple);
-      color: #fff;
-      font-size: 13px;
-    }
-    .toolbar .brand { display: flex; align-items: center; gap: 8px; }
-    .toolbar .brand img { height: 28px; width: auto; background: #fff; padding: 2px 4px; }
-    .toolbar .actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-    .toolbar button {
-      border: 1px solid #fff;
-      background: transparent;
-      color: #fff;
-      font: inherit;
-      font-size: 13px;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-    .toolbar button.primary { background: #fff; color: var(--purple); border-color: #fff; }
-    .toolbar button:hover { background: rgba(255,255,255,.15); }
-    .toolbar button.primary:hover { background: #f3f3f3; }
-    .toolbar .status { font-size: 12px; opacity: .9; }
-    .sheet-wrap {
-      width: min(var(--page-w), calc(100% - 16px));
-      margin: 12px auto 32px;
-    }
-    .sheet {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      padding: 16px 18px 22px;
+    .wrap { max-width: 720px; margin: 24px auto; padding: 0 16px 40px; }
+    .card {
+      background: #fff;
+      border: 1px solid #CCCCCC;
+      padding: 20px 22px 28px;
     }
     .motto {
       text-align: center;
-      color: var(--purple);
+      color: #4208A8;
       font-size: 13px;
       font-weight: 700;
       margin: 0 0 8px;
-      letter-spacing: .02em;
     }
-    .title-block {
-      text-align: center;
-      margin: 0 0 14px;
-      padding: 0 0 10px;
-      border-bottom: 1px solid var(--line);
-    }
-    .title-block .logo {
-      display: block;
-      width: min(250px, 70%);
-      height: auto;
-      margin: 0 auto 8px;
-    }
-    .eyebrow { margin: 0; font-size: 12px; color: #444; }
+    img.logo { display: block; width: 250px; max-width: 80%; height: auto; margin: 0 auto 8px; }
     h1 {
       font-family: "Arial Black", Arial, sans-serif;
-      font-weight: 900;
-      font-size: 22px;
+      text-align: center;
+      font-size: 26px;
       line-height: 1.2;
-      margin: 6px 0 0;
-      color: var(--purple);
+      color: #4208A8;
+      margin: 8px 0 12px;
     }
-    .meta { display: grid; gap: 8px; margin: 0 0 12px; }
-    .field {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 8px;
-      align-items: end;
-      font-size: 15px;
-    }
-    .field span { color: #222; padding-bottom: 2px; }
-    .field .ink, .admit .ink {
-      border: none;
-      border-bottom: 1px solid #888;
-      background: transparent;
-      font: inherit;
-      font-size: 15px;
-      padding: 2px 4px;
-      color: var(--ink);
-      width: 100%;
-      min-width: 0;
-    }
-    .field .ink:focus, .admit .ink:focus { outline: none; border-bottom-color: var(--purple); }
-    .lead, .scheme { margin: 0 0 8px; font-size: 15px; color: #222; line-height: 1.45; }
-    .gate {
-      margin: 0 0 14px;
-      padding: 10px 12px;
-      border: 1px solid var(--purple);
-    }
-    .gate p { margin: 0 0 6px; }
-    .gate p:last-child { margin: 0; }
-    .gate b { color: var(--purple); }
-    h2 {
-      font-family: "Arial Black", Arial, sans-serif;
-      font-weight: 900;
+    p { font-size: 17px; line-height: 1.45; }
+    .links { display: grid; gap: 10px; margin-top: 16px; }
+    a.goto {
+      display: block;
+      padding: 14px 16px;
+      border: 1px solid #CCCCCC;
+      color: #111;
+      text-decoration: none;
       font-size: 18px;
-      line-height: 1.25;
-      color: var(--purple);
-      margin: 0 0 6px;
-      page-break-after: avoid;
+      font-weight: 700;
     }
-    .when { margin: 0 0 8px; font-size: 14px; color: #333; }
-    .list { display: flex; flex-direction: column; gap: 6px; }
-    .item {
-      display: grid;
-      grid-template-columns: 18px 1fr;
-      gap: 8px;
-      align-items: start;
-      cursor: pointer;
-      font-size: 16px;
-      line-height: 1.4;
-    }
-    .item input {
-      position: absolute;
-      opacity: 0;
-      width: 1px;
-      height: 1px;
-      pointer-events: none;
-    }
-    .item .box {
-      width: 16px;
-      height: 16px;
-      margin-top: 3px;
-      border: 1.5px solid #444;
-      background: #fff;
-    }
-    .item input:checked + .box {
-      background: var(--purple);
-      border-color: var(--purple);
-      box-shadow: inset 0 0 0 2px #fff;
-    }
-    .item input:focus-visible + .box { outline: 2px solid var(--purple); outline-offset: 2px; }
-    .proc { font-weight: 700; }
-    .steps { margin: 4px 0 0; padding-left: 18px; }
-    .steps li { margin: 3px 0; }
-    .block { margin: 0 0 16px; }
-    .sources { margin: 8px 0 0; font-size: 13px; color: #333; }
-    .admit {
-      margin: 18px 0 8px;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
-      page-break-inside: avoid;
-    }
-    .admit-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      align-items: center;
-      margin: 0 0 10px;
-      font-size: 15px;
-    }
-    .admit-row .choice { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
-    .admit-row .choice input { width: 16px; height: 16px; accent-color: var(--purple); }
-    .sign { display: grid; gap: 8px; margin-top: 8px; }
-    @media (max-width: 640px) {
-      .field, .sign .field { grid-template-columns: 1fr; gap: 2px; }
-      .sheet { padding: 12px; }
-      h1 { font-size: 20px; }
-    }
-    @page { size: A4; margin: 10mm 12mm; }
-    @media print {
-      .toolbar { display: none !important; }
-      body { background: #fff; font-size: 13px; line-height: 1.28; }
-      .sheet-wrap { width: 100%; margin: 0; }
-      .sheet { border: none; padding: 0; }
-      .motto { margin: 0 0 2px; font-size: 11px; }
-      .title-block { margin: 0 0 6px; padding: 0 0 4px; }
-      .title-block .logo { width: 180px; }
-      h1 { font-size: 16px; }
-      h2 { font-size: 14px; margin: 0 0 2px; }
-      .meta { gap: 2px; margin: 0 0 6px; }
-      .lead, .scheme, .when, .sources { font-size: 11.5px; }
-      .gate { margin: 0 0 6px; padding: 6px 8px; }
-      .block { margin: 0 0 4px; }
-      .list { gap: 2px; }
-      .item { font-size: 12.5px; gap: 5px; line-height: 1.25; }
-      .steps { font-size: 12px; margin: 1px 0 0; }
-      .steps li { margin: 0; }
-      .item .box { width: 12px; height: 12px; border-width: 1px; margin-top: 1px; }
-      .item, .gate { break-inside: avoid; page-break-inside: avoid; }
-      .block.day { break-before: page; page-break-before: always; }
-      a { color: inherit; text-decoration: none; }
-    }
+    a.goto span { display: block; font-weight: 400; font-size: 15px; color: #333; margin-top: 4px; }
+    a.goto:hover { border-color: #4208A8; }
   </style>
 </head>
 <body>
-  <div class="toolbar">
-    <div class="brand">
-      <img src="assets/logo.png" alt="У Михалыча" width="120" height="36" />
-      <span>Академия УМ · отгрузка юридическим лицам</span>
-    </div>
-    <div class="actions">
-      <span class="status" id="save-status">отметки хранятся в этом браузере</span>
-      <button type="button" id="btn-save">Сохранить</button>
-      <button type="button" id="btn-clear">Очистить</button>
-      <button type="button" class="primary" id="btn-print">Печать / PDF</button>
-    </div>
-  </div>
-
-  <div class="sheet-wrap">
-    <article class="sheet" id="checklist">
+  <div class="wrap">
+    <article class="card">
       <p class="motto">Делаем мир крепче</p>
-      <header class="title-block">
-        <img class="logo" src="assets/logo.png" alt="У Михалыча" width="250" height="72" />
-        <p class="eyebrow">Академия УМ · сеть «У Михалыча»</p>
-        <h1>Чек-лист на 5 дней.<br>Менеджер по работе с клиентами</h1>
-      </header>
-
-      <div class="meta">
-        <label class="field"><span>Сотрудник</span><input type="text" data-k class="ink" autocomplete="name" /></label>
-        <label class="field"><span>Магазин</span><input type="text" data-k class="ink" autocomplete="off" /></label>
-        <label class="field"><span>Наставник</span><input type="text" data-k class="ink" autocomplete="off" /></label>
-        <label class="field"><span>Дата начала</span><input type="text" data-k class="ink" autocomplete="off" placeholder="например, 18.11.2026" /></label>
+      <img class="logo" src="assets/logo.png" alt="У Михалыча" width="250" height="72" />
+      <h1>Отгрузка юридическим лицам. 5 дней</h1>
+      <p>Два листа на одну стажировку менеджера по работе с клиентами. Стажёр отмечает, что сделал сам. Наставник отмечает, что увидел, и в конце решает, можно ли уже отгружать организацию без него.</p>
+      <p>Частный покупатель платит на кассе. Заказ из монитора интернет-магазина выдают один раз. Организации товар отдаём, когда есть доверенность на получателя и есть основание: счёт оплачен или открыт остаток кредита и запрета отгрузки нет.</p>
+      <p>Если шаг не сделан, галочку не ставьте. Отметки хранятся в этом браузере. Лист можно напечатать.</p>
+      <div class="links">
+        <a class="goto" href="stazhirovka/">Чек-лист стажировки<span>Пять дней для сотрудника: карточка, оплата и кредит, доверенность, УПД, живая отгрузка</span></a>
+        <a class="goto" href="nastavnik/">Чек-лист наставника<span>Что показать, что услышать и когда ставить допуск</span></a>
       </div>
-
-      <p class="lead">Пять дней в магазине, рядом с наставником. К концу сотрудник сам проводит отгрузку организации в 1С:Торговля и понимает, когда товар остаётся у нас.</p>
-      <p class="scheme">Отмечайте только то, что сделали на живой карточке или на живой отгрузке. Прочитал и не попробовал — пункт пустой. Наставник в конце дня смотрит лист вместе с сотрудником.</p>
-
-      <section class="gate">
-        <p><b>Три разные выдачи.</b> Их легко смешать, потому что товар в руках один и тот же.</p>
-        <p>Частный покупатель платит на обычной кассе и забирает товар. Доверенность компании ему не нужна.</p>
-        <p>Заказ из монитора интернет-магазина уже лежит в журнале своего магазина. Смотрим процент оплаты. Если на сайте ещё не оплачено, принимаем оплату. Кнопку «Выдача заказа» нажимаем один раз: программа сама проводит реализацию и создаёт счёт-фактуру.</p>
-        <p>Организации, ИП и бюджету товар отдаём другим путём. Нужна доверенность на того, кто стоит перед вами. И нужно основание отгрузить: счёт уже оплачен или в «Помощнике продаж» открыт остаток кредита и запрета отгрузки нет. Одной доверенности без оплаты и без кредита мало. Оплаты без доверенности тоже мало.</p>
-      </section>
-
-      <section class="block">
-        <h2>День 1. Карточка клиента</h2>
-        <p class="when">Сначала учимся видеть клиента в 1С:Торговля. Товар сегодня не отдаём.</p>
-        <div class="list">
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Три выдачи своими словами</span>
-            <ul class="steps">
-              <li>Наставнику рассказал, чем касса отличается от монитора интернет-магазина и чем оба отличаются от отгрузки организации</li>
-              <li>Назвал два условия вместе: доверенность на получателя и основание, счёт оплачен или открыт остаток кредита без запрета</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Поиск по ИНН</span>
-            <ul class="steps">
-              <li>Открыл «Помощник продаж» и нашёл двух действующих клиентов по ИНН</li>
-              <li>По названию не искал, пока клиент не назвал ИНН. Если названия было мало, перед записью всё равно сверил ИНН</li>
-              <li>Вторую карточку на того же клиента не создал</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Что прочитал в карточке</span>
-            <ul class="steps">
-              <li>Договор, обычно «Автодоговор по предоплате», статус «Действует»</li>
-              <li>Остаток кредита: на какую сумму ещё можно отгрузить</li>
-              <li>Строку «Долг клиента» и есть ли запрет отгрузки</li>
-              <li>Основного менеджера</li>
-              <li>Пометку «// ЭДО», если клиент работает электронно, и поле «ЭДО»</li>
-              <li>Соглашение. Свои цены видны, когда индивидуальное соглашение в статусе «Действует»</li>
-              <li>Выбрал склад, с которого пойдёт товар. Без склада отгрузку не оформляем</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Если клиента ещё нет</span>
-            <ul class="steps">
-              <li>Путь показал наставнику: «Помощник продаж» → «Основное» → поле «Клиент» → «+»</li>
-              <li>До ввода попросил карточку реквизитов: ИНН, телефон, почта, ФИО того, с кем говорим, и работают ли по ЭДО</li>
-              <li>Вид партнёра «Компания» и для ООО, и для ИП. Вид контрагента: юридическое лицо у ООО и АО, индивидуальный предприниматель у ИП</li>
-              <li>Включил «Указать идентификационные данные партнёра» и заполнил карточку по ИНН. Реквизиты в комментарий не писал</li>
-              <li>Галочку «Клиент» поставил. Флажок «Создавать договор предоплаты» оставил включённым</li>
-              <li>Основного менеджера указал того, кто реально ведёт клиента</li>
-              <li>Если клиент на ЭДО, в рабочее наименование добавил «// ЭДО», в поле «ЭДО» выбрал «Контур». Если не работает или пока неизвестно, указал «Не работает в ЭДО»</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">Наставник видел карточку вместе со мной. День 1 закрыт</span></label>
-        </div>
-      </section>
-
-      <section class="block day">
-        <h2>День 2. Когда товар можно отдать</h2>
-        <p class="when">Смотрим оплату и кредит до того, как говорить клиенту «сейчас вынесу».</p>
-        <div class="list">
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Два разных счёта</span>
-            <ul class="steps">
-              <li>Счёт на конкретный товар: в помощнике операция «Заказ». Чтобы товар остался за клиентом, статус «К выполнению», в строке действие «Резервировать»</li>
-              <li>Статуса «Создан» для резерва мало</li>
-              <li>Аванс без списка товара: счёт на оплату из договора, не пустой заказ. Деньги лягут на договор</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Оплаченный счёт</span>
-            <ul class="steps">
-              <li>С наставником открыл клиента, который оплатил счёт на неделе, и показал в 1С, где видна оплата</li>
-              <li>Понял: скрин платёжки из телефона и фраза «деньги уже в пути» оплату не заменяют. Оплату смотрим в 1С</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Открытый остаток кредита</span>
-            <ul class="steps">
-              <li>Открыл клиента с остатком кредита и назвал сумму, на которую ещё можно отгрузить</li>
-              <li>Отдельно посмотрел «Долг клиента». Запрета не было, только тогда остаток кредита считается открытым</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Запрет отгрузки</span>
-            <ul class="steps">
-              <li>На карточке с запретом товар не отдал</li>
-              <li>Счёт на нужный товар выставить можно: напечатать, на почту или по ЭДО</li>
-              <li>Позвонил основному менеджеру из карточки и сказал, что клиент в магазине и есть просроченная задолженность</li>
-              <li>Запрет по фразе «деньги уже в пути» не снял</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Чей это клиент</span>
-            <ul class="steps">
-              <li>Если основной менеджер не я и доверенности нет, решение по отгрузке сам не принял</li>
-              <li>Чужого клиента в день визита на себя не переписал. Перезакрепление просят, только когда 180 дней нет ни реализации, ни заказа. Запрос идёт руководителю отдела, Александру Загривкову</li>
-              <li>Заявку на заказной товар могу принять, в стол заказов её ведёт основной менеджер. Договор отсрочки согласует тоже он</li>
-              <li>Вопросы по документам, актам и отсрочке идут основному менеджеру из карточки</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">Наставник проверил, что я отличаю оплату, кредит и запрет. День 2 закрыт</span></label>
-        </div>
-      </section>
-
-      <section class="block day">
-        <h2>День 3. Доверенность</h2>
-        <p class="when">Товар забирает живой человек. Электронный УПД уходит в бухгалтерию, а в магазине нам нужно имя того, кто получил товар. Правило одно и для бумаги, и для ЭДО.</p>
-        <div class="list">
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Что принимаем</span>
-            <ul class="steps">
-              <li>Подошёл оригинал или доверенность, которая пришла по ЭДО. Форма М-2а</li>
-              <li>Фотографию, скан «для скорости» и ксерокопию не принял. Такая отгрузка попадает в реестр со статусом «Нет доверенности»</li>
-              <li>Отгрузка идёт от ИП Пафнутьева Е.П. Организация в доверенности, на печати и в реализации одна и та же</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Шесть проверок до выбора в реализации</span>
-            <ul class="steps">
-              <li>Наименование организации, которая выдала доверенность</li>
-              <li>Срок. Дата УПД входит в срок. Дата вне срока товар не отпускает</li>
-              <li>ФИО того, кто стоит передо мной. Коллеге из той же компании без его фамилии в доверенности не отдал</li>
-              <li>ФИО и подпись руководителя</li>
-              <li>Печать организации, которая выдала доверенность</li>
-              <li>Подпись самого получателя. Её нет чаще всего. Без неё доверенность не годится</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Как заносим в 1С</span>
-            <ul class="steps">
-              <li>До выдачи товара занёс доверенность в журнал 1С:Торговля и выбрал её в реализации. Поле пустым не оставил</li>
-              <li>Разовую, короче 10 дней, тоже занёс. В офис она поедет вместе со своим УПД</li>
-              <li>Годовая, если оригинал уже в офисе, в реализации всё равно выбрана. Новый оригинал каждый раз не просил</li>
-              <li>Отметку «Есть оригинал» ставит оператор офиса, не магазин</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">ИП забирает сам</span>
-            <ul class="steps">
-              <li>Если товар забирает сам индивидуальный предприниматель и печати у него нет, доверенность на самого себя не нужна. В УПД вместо печати он пишет «Б/П»</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Разбор с наставником</span>
-            <ul class="steps">
-              <li>На образце годной доверенности назвал все шесть пунктов</li>
-              <li>На плохом образце сказал, чего не хватает, и товар по нему не отдал бы</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">Наставник видел, как я сверяю доверенность. День 3 закрыт</span></label>
-        </div>
-      </section>
-
-      <section class="block day">
-        <h2>День 4. Реализация, УПД и пакет в офис</h2>
-        <p class="when">Документ делаем в момент выдачи. Подпись фиксирует, что товар ушёл и ответственность за него тоже.</p>
-        <div class="list">
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Реализация и счёт-фактура</span>
-            <ul class="steps">
-              <li>В помощнике прошёл вкладки по порядку: Основное, Корзина, Дополнительно, Документы</li>
-              <li>На «Дополнительно» выбрал доверенность, если товар забирает представитель</li>
-              <li>Реализацию провёл, когда товар отдают. Счёт-фактуру создал сразу, только на основании проведённой реализации. Без неё пакет неполный</li>
-              <li>Премия считается по полю «Автор документа». Оно закрыто от правки. Поле «Менеджер» тянется из заказа и на премию не влияет. «Отпустил» — это тот, чья подпись стоит на бумаге</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Бумажный УПД, который можно сдать</span>
-            <ul class="steps">
-              <li>Три наши подписи. У каждой должность и указание нашей доверенности. Подпись в своей строке</li>
-              <li>Наша печать ИП Пафнутьева Е.П.</li>
-              <li>Две подписи покупателя. У каждой ФИО, должность и дата, когда товар получили</li>
-              <li>Печать покупателя сверена с названием и ИНН. Если печати нет, к УПД приложена годная доверенность. ИП без печати, который забирает сам, пишет «Б/П»</li>
-              <li>Дата приёмки и грузополучатель заполнены, фамилия читается без догадок</li>
-              <li>Нашей печати одной для сдачи мало: на УПД уже есть подпись покупателя, печать или доверенность</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Клиент на ЭДО</span>
-            <ul class="steps">
-              <li>В карточке есть «// ЭДО», в поле «ЭДО» стоит «Контур». Письмо со словом «Диадок» в адресе такой отметкой не считается</li>
-              <li>До отправки проверил, что приглашение принято. Иначе кнопка «Отправить по ЭДО» даст ошибку</li>
-              <li>Счёт, УПД, корректировочный документ и акт сверки отправляю из 1С. Договор и акт взаимозачёта, если файл собран на компьютере, через веб-Диадок</li>
-              <li>УПД уходит в день отгрузки. Клиент подписывает его в том же календарном месяце. В реестре пишем «ЭДО». Скан на почту электронным документом не является</li>
-              <li>На месте всё равно печатаю расходную накладную. Это печатная форма УПД. Её подписывают получатель из доверенности и сотрудник, который выдал товар</li>
-              <li>Бумажную расходную храню в магазине, пока идёт отчётный период. Когда акт сверки подписан и документы по ЭДО закрыты, её можно уничтожить</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Что едет в офис</span>
-            <ul class="steps">
-              <li>Пакет уезжает с возвратной машиной, не реже раза в неделю. Прошлый месяц закрыт до 3-го числа. Пометка: «Оператору КО»</li>
-              <li>Реестр УПД подписывает старший продавец-консультант. Без его подписи пакет не сдан</li>
-              <li>Каждый клиент своим блоком: его УПД и сразу за ним новая доверенность. Все УПД одной стопкой, а доверенности другой, не собираю</li>
-              <li>Договор, дополнительное соглашение и акт сверки в машину не кладу. Они живут в магазине, пока работаем с клиентом</li>
-              <li>По первичным документам и ЭДО знаю, к кому идти: Надежда Русина, оператор корпоративного отдела, +7 (3452) 57-55-67, доб. 107, n.rusina@um-ural.ru</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Уже подписанный УПД и возврат</span>
-            <ul class="steps">
-              <li>Подписанный с двух сторон документ заново не открыл, строку не удалил, реализацию из базы не стёр</li>
-              <li>Сделал корректировку реализации и отправил корректировочный УПД из 1С</li>
-              <li>Документ «Возврат товаров от клиента» при реализации по заказу не создаю</li>
-              <li>Возврат организации принимаем и из другого города, и из интернет-магазина. Фразу «мы юридических лиц на возврат не берём» не говорю</li>
-              <li>Доверенность смотрю уже когда товар сдают. Деньги возвращаем на расчётный счёт организации. Нужны заявление и подписанный акт сверки</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">Наставник сверил со мной один комплект: реализация, доверенность, УПД. День 4 закрыт</span></label>
-        </div>
-      </section>
-
-      <section class="block day">
-        <h2>День 5. Отгрузка рядом с наставником</h2>
-        <p class="when">Один полный круг на живом клиенте, если он пришёл. Если за день организации не было, тот же круг проходим на учебной карточке, а живую отгрузку закрываем в ближайшую смену. Наставник стоит рядом и не ведёт документ вместо сотрудника.</p>
-        <div class="list">
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Перед тем как отдать товар</span>
-            <ul class="steps">
-              <li>Клиент найден по ИНН, вторая карточка не создана, склад выбран</li>
-              <li>Есть основание: счёт оплачен в 1С или открыт остаток кредита и запрета отгрузки нет</li>
-              <li>Доверенность оригинал или из ЭДО. Фамилия, срок, подпись получателя и печать сошлись. В реализации она выбрана. Для ИП, который забирает сам, стоит «Б/П»</li>
-              <li>Реализация проведена, счёт-фактура создана следом</li>
-              <li>На бумаге подписи и печать на месте. Либо пометка «ЭДО» и подписанная расходная накладная</li>
-              <li>Если основной менеджер не я, он знает про визит, когда был вопрос по долгу или документам</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Три ситуации, которые умею назвать</span>
-            <ul class="steps">
-              <li>Счёт оплачен на неделе, клиент пришёл забирать. Нужны ИНН, номер счёта, точные карточки из 1С и количество, кто забирает и есть ли оригинал доверенности</li>
-              <li>Хочет оплатить сейчас и сразу забрать: наличные или корпоративная карта через терминал. Счёт и реализация в 1С, чек на кассе закрывает документ для организации</li>
-              <li>Клиента ещё нет в базе: фото карточки предприятия, минимум ИНН, почта и телефон, плюс точные карточки товара</li>
-              <li>Название товара своими словами в сообщение и в заказ не писал. Карточка из 1С или код, количество отдельно</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Если в смене провести документ некому</span>
-            <ul class="steps">
-              <li>Сначала спросил коллег. Кто умеет, тот делает документ под своей учёткой</li>
-              <li>В субботу и воскресенье, когда провести некому, а клиент уже здесь, пишет или звонит один человек со смены. Операторы интернет-магазина Юлия Тюрина и Алеся Смольянинова на связи каждый день с 08:00 до 19:30, график 2/2</li>
-              <li>В сообщении: магазин, имя, ситуация, организация, ИНН, счёт если есть, кто забирает, карточки и количество</li>
-              <li>Клиента у стойки не оставил. Телефон ему не передал, пока оператор сам не попросил</li>
-              <li>Пока ждём, говорю: «Документы сейчас оформит интернет-магазин. Я с вами. Товар отдам, когда документ будет готов.» Товар отдал, когда оператор сказал, что документ проведён, и получатель проверен</li>
-              <li>В будний день сначала основной менеджер из карточки. Если его нет, руководитель корпоративного отдела Александр Загривков, +7 932 333-50-90. Отдел работает с 8:00 до 17:00, понедельник–пятница</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Как сказать клиенту</span>
-            <ul class="steps">
-              <li>Нет доверенности: «Товар отдам, когда будет оригинал доверенности или доверенность в ЭДО на того, кто его забирает. Фотографии для учёта недостаточно. Счёт могу выставить сразу.»</li>
-              <li>Есть запрет: «Сейчас отгрузка закрыта из-за задолженности. Счёт подготовлю. Основной менеджер свяжется с вашей бухгалтерией.»</li>
-              <li>ЭДО ещё не связан: «Документ отправлю, как только вы примете приглашение. Скан на почту официальной передачей не является.»</li>
-              <li>Просят поправить подписанный документ: «Старый УПД уже подписан, его не переписываем. Сделаем корректировку и пришлём корректировочный документ.»</li>
-              <li>Возврат в выходной: операторы интернет-магазина возврат организации не оформляют. Принял контакты или пригласил в будний день к специалисту по претензионной работе</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Живая отгрузка</span>
-            <ul class="steps">
-              <li>Провёл документ сам, под своей учёткой. Наставник смотрел</li>
-              <li>Доверенность сверил до выдачи, основание отгрузки назвал вслух: оплаченный счёт или открытый остаток кредита</li>
-              <li>Товар отдал тому, кто указан в доверенности. Клиенту спокойно объяснил, что будет с документами</li>
-            </ul>
-          </span></label>
-          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">В Академии, в «Открыть доступ», прошёл тест «Работа с юрлицами». День 5 закрыт</span></label>
-        </div>
-      </section>
-
-      <section class="admit">
-        <h2>После пяти дней</h2>
-        <div class="admit-row">
-          <span>Может отгружать организацию сам, наставник рядом не нужен:</span>
-          <label class="choice"><input type="checkbox" data-k /> Да</label>
-          <label class="choice"><input type="checkbox" data-k /> Пока рано</label>
-        </div>
-        <div class="admit-row">
-          <span>Закрыто:</span>
-          <label class="choice"><input type="checkbox" data-k /> День 1</label>
-          <label class="choice"><input type="checkbox" data-k /> День 2</label>
-          <label class="choice"><input type="checkbox" data-k /> День 3</label>
-          <label class="choice"><input type="checkbox" data-k /> День 4</label>
-          <label class="choice"><input type="checkbox" data-k /> День 5</label>
-        </div>
-        <label class="field"><span>Что ещё разобрать</span><input type="text" data-k class="ink" autocomplete="off" /></label>
-        <div class="sign">
-          <label class="field"><span>Подпись сотрудника</span><input type="text" data-k class="ink" autocomplete="off" /></label>
-          <label class="field"><span>Подпись наставника</span><input type="text" data-k class="ink" autocomplete="off" /></label>
-          <label class="field"><span>Дата</span><input type="text" data-k class="ink" autocomplete="off" /></label>
-        </div>
-        <p class="sources">Собрано по регламентам: «Как отгружать юридическим лицам», «Оформление реализаций, доверенностей и УПД», «ЭДО», «Основной менеджер в 1С:Торговля и мотивация», «Отгрузка юридическим лицам в выходные дни». Монитор заказов интернет-магазина взят только для сравнения. Сеть магазинов «У Михалыча».</p>
-      </section>
     </article>
   </div>
-
-  <script>
-  (function () {
-    const KEY = "um-mop-yul-5d-v1";
-    const root = document.getElementById("checklist");
-    const status = document.getElementById("save-status");
-    const fields = () => root.querySelectorAll("[data-k]");
-    function assignIds() {
-      fields().forEach((el, i) => { if (!el.dataset.id) el.dataset.id = "f" + i; });
-    }
-    function collect() {
-      const data = {};
-      fields().forEach((el) => {
-        data[el.dataset.id] = el.type === "checkbox" ? el.checked : el.value;
-      });
-      return data;
-    }
-    function apply(data) {
-      if (!data) return;
-      fields().forEach((el) => {
-        const id = el.dataset.id;
-        if (!(id in data)) return;
-        if (el.type === "checkbox") el.checked = !!data[id];
-        else el.value = data[id] || "";
-      });
-    }
-    function save(manual) {
-      try {
-        localStorage.setItem(KEY, JSON.stringify(collect()));
-        const t = new Date();
-        status.textContent = (manual ? "сохранено " : "автосохранение ") +
-          t.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
-      } catch (e) {
-        status.textContent = "не удалось сохранить";
-      }
-    }
-    function load() {
-      try {
-        const raw = localStorage.getItem(KEY);
-        if (raw) apply(JSON.parse(raw));
-      } catch (e) {}
-    }
-    assignIds();
-    load();
-    let timer;
-    root.addEventListener("input", () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => save(false), 400);
-    });
-    root.addEventListener("change", () => save(false));
-    document.getElementById("btn-save").addEventListener("click", () => save(true));
-    document.getElementById("btn-print").addEventListener("click", () => { save(true); window.print(); });
-    document.getElementById("btn-clear").addEventListener("click", () => {
-      if (!confirm("Очистить все отметки и поля в этом браузере?")) return;
-      fields().forEach((el) => {
-        if (el.type === "checkbox") el.checked = false;
-        else el.value = "";
-      });
-      localStorage.removeItem(KEY);
-      status.textContent = "очищено";
-    });
-  })();
-  </script>
 </body>
 </html>

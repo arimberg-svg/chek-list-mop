@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Чек-лист наставника. Отгрузка юридическим лицам</title>
+  <meta name="description" content="Лист наставника на 5 дней: что показать, что услышать и когда стажёр может отгружать организацию сам." />
+  <style>
+    :root {
+      --ink: #111111;
+      --purple: #4208A8;
+      --line: #CCCCCC;
+      --paper: #ffffff;
+      --page-w: 210mm;
+      --font: Arial, Helvetica, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: 17px;
+      line-height: 1.4;
+      background: #f3f3f3;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .toolbar {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: var(--purple);
+      color: #fff;
+      font-size: 13px;
+    }
+    .toolbar .brand { display: flex; align-items: center; gap: 8px; }
+    .toolbar .brand img { height: 28px; width: auto; background: #fff; padding: 2px 4px; }
+    .toolbar .actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .toolbar button {
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .toolbar button.primary { background: #fff; color: var(--purple); border-color: #fff; }
+    .toolbar button:hover { background: rgba(255,255,255,.15); }
+    .toolbar button.primary:hover { background: #f3f3f3; }
+    .toolbar .status { font-size: 12px; opacity: .9; }
+    .toolbar a { color: #fff; }
+    .sheet-wrap {
+      width: min(var(--page-w), calc(100% - 16px));
+      margin: 12px auto 32px;
+    }
+    .sheet {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 16px 18px 22px;
+    }
+    .motto {
+      text-align: center;
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      letter-spacing: .02em;
+    }
+    .title-block {
+      text-align: center;
+      margin: 0 0 14px;
+      padding: 0 0 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .title-block .logo {
+      display: block;
+      width: min(250px, 70%);
+      height: auto;
+      margin: 0 auto 8px;
+    }
+    .eyebrow { margin: 0; font-size: 12px; color: #444; }
+    h1 {
+      font-family: "Arial Black", Arial, sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1.2;
+      margin: 6px 0 0;
+      color: var(--purple);
+    }
+    .meta { display: grid; gap: 8px; margin: 0 0 12px; }
+    .field {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 8px;
+      align-items: end;
+      font-size: 15px;
+    }
+    .field span { color: #222; padding-bottom: 2px; }
+    .field .ink, .admit .ink {
+      border: none;
+      border-bottom: 1px solid #888;
+      background: transparent;
+      font: inherit;
+      font-size: 15px;
+      padding: 2px 4px;
+      color: var(--ink);
+      width: 100%;
+      min-width: 0;
+    }
+    .field .ink:focus, .admit .ink:focus { outline: none; border-bottom-color: var(--purple); }
+    .lead, .scheme { margin: 0 0 8px; font-size: 15px; color: #222; line-height: 1.45; }
+    .gate {
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border: 1px solid var(--purple);
+    }
+    .gate p { margin: 0 0 6px; }
+    .gate p:last-child { margin: 0; }
+    .gate b { color: var(--purple); }
+    h2 {
+      font-family: "Arial Black", Arial, sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      line-height: 1.25;
+      color: var(--purple);
+      margin: 0 0 6px;
+      page-break-after: avoid;
+    }
+    .when { margin: 0 0 8px; font-size: 14px; color: #333; }
+    .list { display: flex; flex-direction: column; gap: 6px; }
+    .item {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      align-items: start;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+    .item input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+    }
+    .item .box {
+      width: 16px;
+      height: 16px;
+      margin-top: 3px;
+      border: 1.5px solid #444;
+      background: #fff;
+    }
+    .item input:checked + .box {
+      background: var(--purple);
+      border-color: var(--purple);
+      box-shadow: inset 0 0 0 2px #fff;
+    }
+    .item input:focus-visible + .box { outline: 2px solid var(--purple); outline-offset: 2px; }
+    .proc { font-weight: 700; }
+    .steps { margin: 4px 0 0; padding-left: 18px; }
+    .steps li { margin: 3px 0; }
+    .block { margin: 0 0 16px; }
+    .sources { margin: 8px 0 0; font-size: 13px; color: #333; }
+    .admit {
+      margin: 18px 0 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      page-break-inside: avoid;
+    }
+    .admit-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+    .admit-row .choice { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .admit-row .choice input { width: 16px; height: 16px; accent-color: var(--purple); }
+    .sign { display: grid; gap: 8px; margin-top: 8px; }
+    @media (max-width: 640px) {
+      .field, .sign .field { grid-template-columns: 1fr; gap: 2px; }
+      .sheet { padding: 12px; }
+      h1 { font-size: 20px; }
+    }
+    @page { size: A4; margin: 10mm 12mm; }
+    @media print {
+      .toolbar { display: none !important; }
+      body { background: #fff; font-size: 13px; line-height: 1.28; }
+      .sheet-wrap { width: 100%; margin: 0; }
+      .sheet { border: none; padding: 0; }
+      .motto { margin: 0 0 2px; font-size: 11px; }
+      .title-block { margin: 0 0 6px; padding: 0 0 4px; }
+      .title-block .logo { width: 180px; }
+      h1 { font-size: 16px; }
+      h2 { font-size: 14px; margin: 0 0 2px; }
+      .meta { gap: 2px; margin: 0 0 6px; }
+      .lead, .scheme, .when, .sources { font-size: 11.5px; }
+      .gate { margin: 0 0 6px; padding: 6px 8px; }
+      .block { margin: 0 0 4px; }
+      .list { gap: 2px; }
+      .item { font-size: 12.5px; gap: 5px; line-height: 1.25; }
+      .steps { font-size: 12px; margin: 1px 0 0; }
+      .steps li { margin: 0; }
+      .item .box { width: 12px; height: 12px; border-width: 1px; margin-top: 1px; }
+      .item, .gate { break-inside: avoid; page-break-inside: avoid; }
+      .block.day { break-before: page; page-break-before: always; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="brand">
+      <img src="../assets/logo.png" alt="У Михалыча" width="120" height="36" />
+      <span>Академия УМ · лист наставника</span>
+    </div>
+    <div class="actions">
+      <a href="../stazhirovka/">Лист стажёра</a>
+      <span class="status" id="save-status">отметки хранятся в этом браузере</span>
+      <button type="button" id="btn-save">Сохранить</button>
+      <button type="button" id="btn-clear">Очистить</button>
+      <button type="button" class="primary" id="btn-print">Печать / PDF</button>
+    </div>
+  </div>
+
+  <div class="sheet-wrap">
+    <article class="sheet" id="checklist">
+      <p class="motto">Делаем мир крепче</p>
+      <header class="title-block">
+        <img class="logo" src="../assets/logo.png" alt="У Михалыча" width="250" height="72" />
+        <p class="eyebrow">Академия УМ · сеть «У Михалыча» · лист наставника</p>
+        <h1>Чек-лист наставника.<br>Отгрузка юридическим лицам</h1>
+      </header>
+
+      <div class="meta">
+        <label class="field"><span>Наставник</span><input type="text" data-k class="ink" autocomplete="name" /></label>
+        <label class="field"><span>Стажёр</span><input type="text" data-k class="ink" autocomplete="off" /></label>
+        <label class="field"><span>Магазин</span><input type="text" data-k class="ink" autocomplete="off" /></label>
+        <label class="field"><span>Дата начала</span><input type="text" data-k class="ink" autocomplete="off" placeholder="например, 18.11.2026" /></label>
+      </div>
+
+      <p class="lead">Этот лист ведёт наставник. Стажёр отмечает свои шаги отдельно: <a href="../stazhirovka/">чек-лист стажировки</a>.</p>
+      <p class="scheme">Галочку ставьте, когда увидели действие или услышали ответ своими словами. Рассказали правило, а стажёр ещё не сделал — пункт пустой. Документ в 1С проводит стажёр под своей учёткой. Клавиатуру у него не забирайте.</p>
+
+      <section class="gate">
+        <p><b>Что он должен отличить до первой отгрузки.</b></p>
+        <p>Частный покупатель платит на кассе. Заказ из монитора интернет-магазина выдают один раз кнопкой «Выдача заказа».</p>
+        <p>Организации товар отдаём, когда есть доверенность на получателя и есть основание: счёт оплачен в 1С или открыт остаток кредита и запрета отгрузки нет. Если стажёр путает эти три выдачи, день не закрывайте.</p>
+      </section>
+
+      <section class="block">
+        <h2>До первого дня</h2>
+        <p class="when">Подготовьте смену так, чтобы пять дней стажёр был рядом с вами, а не один с регламентом.</p>
+        <div class="list">
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Смена и вход</span>
+            <ul class="steps">
+              <li>Пять дней смены совпадают. Стажёр знает, кто наставник</li>
+              <li>Вход в 1С:Торговля есть под учёткой стажёра, не под вашей</li>
+              <li>Стажёр открыл свой лист и понимает: отмечает только сделанное</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Три карточки и две доверенности</span>
+            <ul class="steps">
+              <li>Подобрал клиента с оплаченным счётом</li>
+              <li>Подобрал клиента с открытым остатком кредита и без запрета</li>
+              <li>Подобрал клиента с запретом отгрузки</li>
+              <li>Под рукой годная доверенность и доверенность без подписи получателя</li>
+            </ul>
+          </span></label>
+        </div>
+      </section>
+
+      <section class="block day">
+        <h2>День 1. Карточка</h2>
+        <p class="when">Товар сегодня не отдаём. Смотрите, умеет ли он читать карточку, а не пересказывать инструкцию.</p>
+        <div class="list">
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Услышал своими словами</span>
+            <ul class="steps">
+              <li>Отличил кассу, монитор интернет-магазина и отгрузку организации</li>
+              <li>Назвал оба условия вместе: доверенность и основание, оплаченный счёт или открытый кредит без запрета</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Увидел в программе</span>
+            <ul class="steps">
+              <li>Сам нашёл двух клиентов по ИНН. По одному названию карточку не записал</li>
+              <li>Вторую карточку на того же клиента не создал</li>
+              <li>В карточке назвал договор, остаток кредита, долг, запрет, основного менеджера, пометку ЭДО, соглашение и склад</li>
+              <li>Показал путь новой карточки. Реквизиты заполнил по ИНН, в комментарий не писал. Основным менеджером поставил того, кто ведёт клиента</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">День 1 закрываю</span></label>
+        </div>
+      </section>
+
+      <section class="block day">
+        <h2>День 2. Оплата, кредит, запрет</h2>
+        <p class="when">Пока он не отличает эти три состояния, к доверенности не переходите.</p>
+        <div class="list">
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Три карточки, которые вы подготовили</span>
+            <ul class="steps">
+              <li>На оплаченном счёте показал в 1С, где видна оплата. Скрин из телефона и «деньги уже в пути» оплатой не назвал</li>
+              <li>На открытом кредите назвал сумму, на которую ещё можно отгрузить, и отдельно проверил строку «Долг клиента»</li>
+              <li>На запрете товар не отдал. Счёт выставить готов. Основному менеджеру из карточки позвонил бы сам</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Чей клиент</span>
+            <ul class="steps">
+              <li>Отличил счёт на товар («Заказ», статус «К выполнению», «Резервировать») от счёта на аванс из договора</li>
+              <li>Чужого клиента в день визита на себя не переписал. Перезакрепление только после 180 дней без заказа и реализации, запрос Александру Загривкову</li>
+              <li>Стол заказов и договор отсрочки оставляет основному менеджеру</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">День 2 закрываю</span></label>
+        </div>
+      </section>
+
+      <section class="block day">
+        <h2>День 3. Доверенность</h2>
+        <p class="when">Дайте оба образца сами. Подсказку, чего не хватает, не давайте, пока он не скажет.</p>
+        <div class="list">
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Что принял и что отверг</span>
+            <ul class="steps">
+              <li>Оригинал и доверенность из ЭДО, форма М-2а, принял. Фото, скан и ксерокопию отверг: это статус «Нет доверенности»</li>
+              <li>Сверил организацию: отгрузка от ИП Пафнутьева Е.П.</li>
+              <li>На годной доверенности назвал шесть пунктов: организация, срок, ФИО того, кто стоит перед ним, подпись руководителя, печать, подпись получателя</li>
+              <li>На плохой сразу увидел, что нет подписи получателя. Товар по ней не отдал бы</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Как занёс</span>
+            <ul class="steps">
+              <li>Занёс доверенность в журнал и выбрал её в реализации до выдачи товара</li>
+              <li>Разовую короче 10 дней тоже заносит и отправляет с УПД. Годовую, если оригинал уже в офисе, в документе указывает, новый бланк каждый раз не просит</li>
+              <li>Знает, что «Есть оригинал» ставит оператор офиса</li>
+              <li>ИП, который забирает сам и без печати: доверенность на себя не нужна, в УПД «Б/П»</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">День 3 закрываю</span></label>
+        </div>
+      </section>
+
+      <section class="block day">
+        <h2>День 4. Комплект документов</h2>
+        <p class="when">Сверьте с ним один реальный или учебный комплект. В офис уходит то, что можно прочитать без догадок.</p>
+        <div class="list">
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Реализация</span>
+            <ul class="steps">
+              <li>Прошёл вкладки сам: Основное, Корзина, Дополнительно, Документы. Доверенность выбрал на «Дополнительно»</li>
+              <li>Реализацию провёл в момент выдачи. Счёт-фактуру создал следом, с непроведённой реализации не делал</li>
+              <li>Понял премию: считается автор документа. Поле «Менеджер» и «Отпустил» на процент не влияют</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">УПД, ЭДО, пакет</span>
+            <ul class="steps">
+              <li>На бумажном УПД нашёл бы подпись не в той строке, пустую дату приёмки и нечитаемую фамилию. Такие в офис не кладёт</li>
+              <li>Три наши подписи и печать ИП Пафнутьева, две подписи покупателя, печать покупателя или доверенность</li>
+              <li>Клиенту на ЭДО документ уходит из 1С в день отгрузки. Скан на почту электронным документом не назвал. Расходную накладную на месте всё равно печатает и берёт подпись</li>
+              <li>Пакет собирает блоками: УПД клиента и сразу его доверенность. Пометка «Оператору КО». Договор, допсоглашение и акт сверки в машину не кладёт</li>
+              <li>Подписанный УПД заново не открывает. Для правки и возврата организации делает корректировку реализации. Фразу «юрлиц на возврат не берём» не говорит</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">Один комплект сверил вместе. День 4 закрываю</span></label>
+        </div>
+      </section>
+
+      <section class="block day">
+        <h2>День 5. Отгрузка его руками</h2>
+        <p class="when">Вы стоите рядом. Если за день организации не было, учебный круг закройте сегодня, а допуск поставьте после живой отгрузки.</p>
+        <div class="list">
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Что увидел до выдачи товара</span>
+            <ul class="steps">
+              <li>Документ проведён под учёткой стажёра</li>
+              <li>До выдачи вслух назвал основание: оплаченный счёт или открытый остаток кредита без запрета</li>
+              <li>Доверенность сверил до того, как товар ушёл. Отдал тому, кто в ней указан</li>
+              <li>Клиенту сказал спокойно, чего не хватает, если комплект не сошёлся. Товар при этом остался у нас</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Выходные и чужая смена</span>
+            <ul class="steps">
+              <li>Сначала спрашивает коллег. К операторам интернет-магазина пишет один человек и только когда в смене провести некому</li>
+              <li>В сообщении есть магазин, ИНН, ситуация, кто забирает, точные карточки и количество. Название своими словами не пишет</li>
+              <li>Клиента у стойки не оставляет. Телефон не передаёт, пока оператор сам не попросит</li>
+              <li>Возврат организации в выходной операторам интернет-магазина не отдаёт: контакты принял или пригласил в будний день</li>
+              <li>В будний день сначала идёт к основному менеджеру. Если его нет, к Александру Загривкову</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt"><span class="proc">Проверка</span>
+            <ul class="steps">
+              <li>Тест «Работа с юрлицами» в Академии, раздел «Открыть доступ», пройден</li>
+              <li>Живая отгрузка была. Если нет, пишу это в допуске и «может сам» не ставлю</li>
+            </ul>
+          </span></label>
+          <label class="item"><input type="checkbox" data-k /><span class="box" aria-hidden="true"></span><span class="txt">День 5 закрываю</span></label>
+        </div>
+      </section>
+
+      <section class="admit">
+        <h2>Допуск</h2>
+        <div class="admit-row">
+          <span>Может отгружать организацию сам:</span>
+          <label class="choice"><input type="checkbox" data-k /> Да</label>
+          <label class="choice"><input type="checkbox" data-k /> Пока рано</label>
+        </div>
+        <div class="admit-row">
+          <span>Закрыто:</span>
+          <label class="choice"><input type="checkbox" data-k /> День 1</label>
+          <label class="choice"><input type="checkbox" data-k /> День 2</label>
+          <label class="choice"><input type="checkbox" data-k /> День 3</label>
+          <label class="choice"><input type="checkbox" data-k /> День 4</label>
+          <label class="choice"><input type="checkbox" data-k /> День 5</label>
+        </div>
+        <label class="field"><span>Что доучить</span><input type="text" data-k class="ink" autocomplete="off" /></label>
+        <div class="sign">
+          <label class="field"><span>Подпись наставника</span><input type="text" data-k class="ink" autocomplete="off" /></label>
+          <label class="field"><span>Подпись стажёра</span><input type="text" data-k class="ink" autocomplete="off" /></label>
+          <label class="field"><span>Дата</span><input type="text" data-k class="ink" autocomplete="off" /></label>
+        </div>
+        <p class="sources">Те же регламенты, что в листе стажёра. Сеть магазинов «У Михалыча».</p>
+      </section>
+    </article>
+  </div>
+  <script>
+  (function () {
+    const KEY = "um-mop-nastavnik-v1";
+    const root = document.getElementById("checklist");
+    const status = document.getElementById("save-status");
+    const fields = () => root.querySelectorAll("[data-k]");
+    function assignIds() {
+      fields().forEach((el, i) => { if (!el.dataset.id) el.dataset.id = "f" + i; });
+    }
+    function collect() {
+      const data = {};
+      fields().forEach((el) => {
+        data[el.dataset.id] = el.type === "checkbox" ? el.checked : el.value;
+      });
+      return data;
+    }
+    function apply(data) {
+      if (!data) return;
+      fields().forEach((el) => {
+        const id = el.dataset.id;
+        if (!(id in data)) return;
+        if (el.type === "checkbox") el.checked = !!data[id];
+        else el.value = data[id] || "";
+      });
+    }
+    function save(manual) {
+      try {
+        localStorage.setItem(KEY, JSON.stringify(collect()));
+        const t = new Date();
+        status.textContent = (manual ? "сохранено " : "автосохранение ") +
+          t.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+      } catch (e) {
+        status.textContent = "не удалось сохранить";
+      }
+    }
+    function load() {
+      try {
+        const raw = localStorage.getItem(KEY);
+        if (raw) apply(JSON.parse(raw));
+      } catch (e) {}
+    }
+    assignIds();
+    load();
+    let timer;
+    root.addEventListener("input", () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => save(false), 400);
+    });
+    root.addEventListener("change", () => save(false));
+    document.getElementById("btn-save").addEventListener("click", () => save(true));
+    document.getElementById("btn-print").addEventListener("click", () => { save(true); window.print(); });
+    document.getElementById("btn-clear").addEventListener("click", () => {
+      if (!confirm("Очистить все отметки и поля в этом браузере?")) return;
+      fields().forEach((el) => {
+        if (el.type === "checkbox") el.checked = false;
+        else el.value = "";
+      });
+      localStorage.removeItem(KEY);
+      status.textContent = "очищено";
+    });
+  })();
+  </script>
+</body>
+</html>
